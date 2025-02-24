@@ -350,10 +350,28 @@ EMSCRIPTEN_BINDINGS(physx)
       .function("setSphericalJointFlag", &PxSphericalJoint::setSphericalJointFlag)
       .function("setLimitCone", &PxSphericalJoint::setLimitCone);
 
-  class_<PxRevoluteJoint, base<PxJoint>>("PxRevoluteJoint");
-  class_<PxFixedJoint, base<PxJoint>>("PxFixedJoint");
+  enum_<PxRevoluteJointFlag::Enum>("PxRevoluteJointFlag")
+      .value("eLIMIT_ENABLED", PxRevoluteJointFlag::eLIMIT_ENABLED);
+
+  class_<PxRevoluteJoint, base<PxJoint>>("PxRevoluteJoint")
+      .function("setLimit", &PxRevoluteJoint::setLimit)
+      .function("setRevoluteJointFlag", &PxRevoluteJoint::setRevoluteJointFlag)
+      .function("setProjectionLinearTolerance", &PxRevoluteJoint::setProjectionLinearTolerance)
+      .function("setProjectionAngularTolerance", &PxRevoluteJoint::setProjectionAngularTolerance);
+
+  class_<PxFixedJoint, base<PxJoint>>("PxFixedJoint")
+      .function("setProjectionLinearTolerance", &PxFixedJoint::setProjectionLinearTolerance)
+      .function("setProjectionAngularTolerance", &PxFixedJoint::setProjectionAngularTolerance);
   class_<PxDistanceJoint, base<PxJoint>>("PxDistanceJoint");
-  class_<PxPrismaticJoint, base<PxJoint>>("PxPrismaticJoint");
+
+  enum_<PxPrismaticJointFlag::Enum>("PxPrismaticJointFlag")
+      .value("eLIMIT_ENABLED", PxPrismaticJointFlag::eLIMIT_ENABLED);
+
+  class_<PxPrismaticJoint, base<PxJoint>>("PxPrismaticJoint")
+      .function("setLimit", &PxPrismaticJoint::setLimit)
+      .function("setPrismaticJointFlag", &PxPrismaticJoint::setPrismaticJointFlag)
+      .function("setProjectionLinearTolerance", &PxPrismaticJoint::setProjectionLinearTolerance)
+      .function("setProjectionAngularTolerance", &PxPrismaticJoint::setProjectionAngularTolerance);
 
   enum_<PxD6Axis::Enum>("PxD6Axis")
       .value("eX", PxD6Axis::Enum::eX)
@@ -400,6 +418,8 @@ EMSCRIPTEN_BINDINGS(physx)
       .function("setDrive", &PxD6Joint::setDrive)
       .function("setDrivePosition", select_overload<void(const PxTransform&, bool)>(&PxD6Joint::setDrivePosition))
       .function("setDriveVelocity", select_overload<void(const PxVec3&, const PxVec3&, bool)>(&PxD6Joint::setDriveVelocity))
+      .function("setProjectionLinearTolerance", &PxD6Joint::setProjectionLinearTolerance)
+      .function("setProjectionAngularTolerance", &PxD6Joint::setProjectionAngularTolerance)
       ;
 
 
