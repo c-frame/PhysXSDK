@@ -295,8 +295,9 @@ EMSCRIPTEN_BINDINGS(physx)
       .value("ePROJECTION", PxConstraintFlag::ePROJECTION);
 
   class_<PxSpring>("PxSpring")
-    .property("stiffness", &PxSpring::stiffness)
-    .property("damping", &PxSpring::damping);
+      .constructor<PxReal,PxReal>()
+      .property("stiffness", &PxSpring::stiffness)
+      .property("damping", &PxSpring::damping);
 
   class_<PxJointLimitParameters>("PxJointLimitParameters")
       .property("restitution", &PxJointLimitParameters::restitution)
@@ -309,18 +310,20 @@ EMSCRIPTEN_BINDINGS(physx)
 
 
   class_<PxJointLimitCone, base<PxJointLimitParameters>>("PxJointLimitCone")
-      .constructor<PxReal,PxReal>().constructor<PxReal,PxReal,PxReal>()
+      .constructor<PxReal, PxReal>()
+      .constructor<PxReal, PxReal, const PxSpring&>()
       .property("yAngle", &PxJointLimitCone::yAngle)
       .property("zAngle", &PxJointLimitCone::zAngle);
 
   class_<PxJointLinearLimitPair, base<PxJointLimitParameters>>("PxJointLinearLimitPair")
-      .constructor<const PxTolerancesScale&, PxReal, PxReal>()
       .constructor<const PxTolerancesScale&, PxReal, PxReal, PxReal>()
+      .constructor<PxReal, PxReal, const PxSpring&>()
       .property("upper", &PxJointLinearLimitPair::lower)
       .property("lower", &PxJointLinearLimitPair::upper);
 
   class_<PxJointAngularLimitPair, base<PxJointLimitParameters>>("PxJointAngularLimitPair")
-      .constructor<PxReal,PxReal>().constructor<PxReal,PxReal,PxReal>()
+      .constructor<PxReal, PxReal>()
+      .constructor<PxReal, PxReal, const PxSpring&>()
       .property("upper", &PxJointAngularLimitPair::upper)
       .property("lower", &PxJointAngularLimitPair::lower);
 
