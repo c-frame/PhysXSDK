@@ -244,7 +244,7 @@ PxTriangleMesh* createTriMesh(std::vector<PxVec3>& vertices, std::vector<PxU32> 
   meshDesc.points.data            = vertices.data();
 
   meshDesc.triangles.count        = indices.size();
-  meshDesc.triangles.stride       = sizeof(PxU32);
+  meshDesc.triangles.stride       = 3*sizeof(PxU32);
   meshDesc.triangles.data         = indices.data();
 
   PxTriangleMesh* triangleMesh = cooking.createTriangleMesh(meshDesc, physics.getPhysicsInsertionCallback());
